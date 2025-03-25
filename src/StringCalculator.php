@@ -14,8 +14,8 @@ class StringCalculator
         try {
             if(empty($numbers))  return 0;
             if($this->isOneNumber($numbers))  return $numbers;
-            [$delimiter,$numbers] = $this->getDelimiterNumbers($numbers);
-            $separatedNumbers = $this->getSeparatedNumbers($numbers,$delimiter);
+            [$delimiters,$numbers] = $this->getDelimiterNumbers($numbers);
+            $separatedNumbers = $this->getSeparatedNumbers($numbers,$delimiters);
             if($this->checkAllPositiveNumbers($separatedNumbers)) return $this->sumSeparatedNumbers($separatedNumbers);
             throw new Exception($this->manageException($separatedNumbers));
         } catch (Exception $e) {
@@ -26,10 +26,10 @@ class StringCalculator
     /**
      * @return string[]
      */
-    private function getSeparatedNumbers(string $numbers, string $delimiter): array
+    private function getSeparatedNumbers(string $numbers, array $delimiter): array
     {
-        $escapedDelimiter = preg_quote($delimiter, '/');
-        return preg_split('/[\n ' . $escapedDelimiter . ' ]+/', $numbers);
+        $allDelimiters = implode('', $delimiter);
+        return preg_split('/[\n ' . preg_quote($allDelimiters, '/') . ' ]+/', $numbers);
     }
 
     /**
@@ -60,20 +60,18 @@ class StringCalculator
      */
     private function getDelimiterNumbers(string $numbers): array
     {
-        if($numbers[0] == "/"){
-            return [$this->getDelimiter($numbers), $this->getNumbers($numbers)];
-
-        }
-        return [",",$numbers];
+        if(str_starts_with($numbers, '/')) return [$this->getDelimiter($numbers), $this->getNumbers($numbers)];
+        return [[","],$numbers];
     }
 
     /**
      * @param string $numbers
-     * @return string
+     * @return array
      */
-    private function getDelimiter(string $numbers): string
+    private function getDelimiter(string $numbers): array
     {
-        return substr(explode("\n", $numbers, 2)[0], 2);
+        preg_match_all('/\[(.*?)\]/', $numbers, $coincidencias);
+        return $coincidencias[1];
     }
 
     /**

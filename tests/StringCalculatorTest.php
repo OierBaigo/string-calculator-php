@@ -61,7 +61,7 @@ final class StringCalculatorTest extends TestCase
      */
     public function givenDelimitersAndNumbersStringReturnsNumbersSum(): void
     {
-        $this->assertEquals(6, $this->calculator->add("//;\n1;2;3"));
+        $this->assertEquals(6, $this->calculator->add("//[;]\n1;2;3"));
     }
 
     /**
@@ -69,15 +69,31 @@ final class StringCalculatorTest extends TestCase
      */
     public function givenNegativeNumbersStringReturnsNegativeNumbersAndException(): void
     {
-        $this->assertEquals("negativos no soportados: -1 -3", $this->calculator->add("//;\n-1;2;-3"));
+        $this->assertEquals("negativos no soportados: -1 -3", $this->calculator->add("//[;]\n-1;2;-3"));
     }
 
     /**
      * @test
      */
-    public function givenNumberOver1000ignore()
+    public function givenNumberOver1000Ignore(): void
     {
-        $this->assertEquals(1003, $this->calculator->add("//;\n1;2;1000;1001"));
+        $this->assertEquals(1003, $this->calculator->add("//[;]\n1;2;1000;1001"));
+    }
+
+    /**
+     * @test
+     */
+    public function givenDelimiterWithAnLengthReturnsNumbersSum(): void
+    {
+        $this->assertEquals(6, $this->calculator->add("//[;;]\n1;;2;;3"));
+    }
+
+    /**
+     * @test
+     */
+    public function givenMultipleDelimitersReturnsNumbersSum(): void
+    {
+        $this->assertEquals(6, $this->calculator->add("//[;;][:]\n1;;2:3"));
     }
 
 
