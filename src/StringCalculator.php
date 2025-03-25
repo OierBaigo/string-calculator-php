@@ -26,10 +26,12 @@ class StringCalculator
     /**
      * @return string[]
      */
-    private function getSeparatedNumbers(string $numbers, array $delimiter): array
+    private function getSeparatedNumbers(string $numbers, array $delimiters): array
     {
-        $allDelimiters = implode('', $delimiter);
-        return preg_split('/[\n ' . preg_quote($allDelimiters, '/') . ' ]+/', $numbers);
+        foreach ($delimiters as $delimiter) {
+            $numbers = str_replace($delimiter,',',$numbers);
+        }
+        return preg_split('/[\n ,]+/', $numbers);
     }
 
     /**

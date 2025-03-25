@@ -83,7 +83,7 @@ final class StringCalculatorTest extends TestCase
     /**
      * @test
      */
-    public function givenDelimiterWithAnLengthReturnsNumbersSum(): void
+    public function givenDelimiterWithAnyLengthReturnsNumbersSum(): void
     {
         $this->assertEquals(6, $this->calculator->add("//[;;]\n1;;2;;3"));
     }
@@ -94,6 +94,14 @@ final class StringCalculatorTest extends TestCase
     public function givenMultipleDelimitersReturnsNumbersSum(): void
     {
         $this->assertEquals(6, $this->calculator->add("//[;;][:]\n1;;2:3"));
+    }
+
+    /**
+     * @test
+     */
+    public function givenDelimiterWithAnyLengthWithDifferentCharactersReturnsNumbersSum(): void
+    {
+        $this->assertEquals(6, $this->calculator->add("//[;:]\n1;:2;:3"));
     }
 
 
