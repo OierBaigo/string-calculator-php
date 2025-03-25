@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Deg540\StringCalculatorPHP\Test;
 
 use Deg540\StringCalculatorPHP\StringCalculator;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 final class StringCalculatorTest extends TestCase
@@ -69,7 +70,10 @@ final class StringCalculatorTest extends TestCase
      */
     public function givenNegativeNumbersStringReturnsNegativeNumbersAndException(): void
     {
-        $this->assertEquals("negativos no soportados: -1 -3", $this->calculator->add("//[;]\n-1;2;-3"));
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("negativos no soportados: -1 -3");
+
+        $this->calculator->add("//[;]\n-1;2;-3");
     }
 
     /**

@@ -9,18 +9,16 @@ class StringCalculator
     /**
      * @param string $numbers
      * @return int|string
+     * @throws Exception
      */
-    function add(string $numbers): int|string {
-        try {
-            if(empty($numbers))  return 0;
-            if($this->isOneNumber($numbers))  return $numbers;
-            [$delimiters,$numbers] = $this->getDelimiterNumbers($numbers);
-            $separatedNumbers = $this->getSeparatedNumbers($numbers,$delimiters);
-            if($this->checkAllPositiveNumbers($separatedNumbers)) return $this->sumSeparatedNumbers($separatedNumbers);
-            throw new Exception($this->manageException($separatedNumbers));
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+    function add(string $numbers): int|string
+    {
+        if(empty($numbers))  return 0;
+        if($this->isOneNumber($numbers))  return $numbers;
+        [$delimiters,$numbers] = $this->getDelimiterNumbers($numbers);
+        $separatedNumbers = $this->getSeparatedNumbers($numbers,$delimiters);
+        if($this->checkAllPositiveNumbers($separatedNumbers)) return $this->sumSeparatedNumbers($separatedNumbers);
+        throw new Exception($this->manageException($separatedNumbers));
     }
 
     /**
