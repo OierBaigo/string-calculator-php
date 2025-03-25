@@ -40,7 +40,7 @@ class StringCalculator
     {
         $sum = 0;
         foreach ($separatedNumbers as $number) {
-            $sum += intval($number);
+            if(intval($number) <= 1000) $sum += intval($number);
         }
         return $sum;
     }

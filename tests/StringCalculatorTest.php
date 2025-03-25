@@ -72,5 +72,13 @@ final class StringCalculatorTest extends TestCase
         $this->assertEquals("negativos no soportados: -1 -3", $this->calculator->add("//;\n-1;2;-3"));
     }
 
+    /**
+     * @test
+     */
+    public function givenNumberOver1000ignore()
+    {
+        $this->assertEquals(1003, $this->calculator->add("//;\n1;2;1000;1001"));
+    }
+
 
 }
