@@ -9,5 +9,68 @@ use PHPUnit\Framework\TestCase;
 
 final class StringCalculatorTest extends TestCase
 {
-    // TODO: String Calculator Kata Tests
+    private StringCalculator $calculator;
+    protected function setUp() : void
+    {
+        parent::setUp();
+        $this->calculator = new StringCalculator();
+    }
+
+    /**
+     * @test
+     */
+    public function givenVoidStringReturns0(): void
+    {
+        $this->assertEquals(0, $this->calculator->add(""));
+    }
+
+    /**
+     * @test
+     */
+    public function given1NumberStringReturnsSameNumber(): void
+    {
+        $this->assertEquals(1, $this->calculator->add("1"));
+    }
+
+    /**
+     * @test
+     */
+    public function given2NumbersStringReturnsNumbersSum(): void
+    {
+        $this->assertEquals(3, $this->calculator->add("1,2"));
+    }
+
+    /**
+     * @test
+     */
+    public function givenMoreThan2NumbersStringReturnsNumbersSum(): void
+    {
+        $this->assertEquals(6, $this->calculator->add("1,2,3"));
+    }
+
+    /**
+     * @test
+     */
+    public function givenMoreThan2NumbersStringReturnsNumbersSumWithLineBreak(): void
+    {
+        $this->assertEquals(6, $this->calculator->add("1,2\n3"));
+    }
+
+    /**
+     * @test
+     */
+    public function givenDelimitersAndNumbersStringReturnsNumbersSum(): void
+    {
+        $this->assertEquals(6, $this->calculator->add("//;\n1;2;3"));
+    }
+
+    /**
+     * @test
+     */
+    public function givenNegativeNumbersStringReturnsNegativeNumbersAndException(): void
+    {
+        $this->assertEquals("negativos no soportados: -1 -3", $this->calculator->add("//;\n-1;2;-3"));
+    }
+
+
 }
